@@ -9,6 +9,10 @@ class Person < ActiveRecord::Base
   end
 
   def self.alphabetically_by_region_and_location
-    joins(location: :region).order("regions.name, locations.name, name")
+    # joins(location: :region).order("regions.name, locations.name, name")
+    joins(location: :region).
+      merge(Region.order(:name)).
+      merge(Location.order(:name)).
+      order(:name)
   end
 end
